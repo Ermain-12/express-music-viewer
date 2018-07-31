@@ -23,25 +23,24 @@ const artistRouter = express.Router();
 //     ]);
 // });
 
-artistRouter.route('/artists')
-            .post(function(req, res){
-                console.log('/artists');
-                var artist = new Artist(req.body);
 
-                artist.save();
-                res.status(201).send(artist);
-            })
-            .get(function(req, res){
-                console.log('GET /artists');
-                
-                Artist.find(function(err, artists){
-                    if(err){
-                        res.status(404).send(err);
-                        return;
-                    }
+artist.Router('/', function(req, res, next){
+    Artist.find(function(err, artists){
+        if(err){
+            console.log(err);
+        }else{
+            res.json(artists);
+        }
+    });
+});
 
-                    console.log(artists);
-                });
-            });
-
-
+/// Get an artist by id
+artist.Router('/:id', function(req, res, next){
+    Artist.findById(req.params.id, function(err, artist){
+        if(err){
+            console.log(err);
+        }else{
+            res.json(artist);
+        }
+    });
+});

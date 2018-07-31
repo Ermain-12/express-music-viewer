@@ -11,6 +11,9 @@ app.set('view engine', 'hbs');
 // Register partial views
 hbs.registerPartials('./views/partials');
 
+// Registers routes 
+var artisitAPI = require('./routes/artistRouter');
+
 app.use('/api/artists', bookRouter);
 app.get('/', (req, res) => {
     res.render('home.hbs', {
