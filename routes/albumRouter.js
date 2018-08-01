@@ -7,14 +7,13 @@ const Album = require('../models/albums.model');
 
 
 albumRouter.get('/', function(req, res, next){
-    Album.find(function(err, albums){
-        if(err){
-            console.log(err);
-            return next(err);
-        }else{
-            res.json(albums);
-        }
-    });
+    Album.find()
+         .sort({})
+         .then((items) => {
+             res.json(items)
+         }).catch((err) => {
+             console.log('Error occurred retrieving items');    
+         });
 });
 
 // Retrieve an album by ID
@@ -55,13 +54,14 @@ albumRouter.put('/:id', function(req, res, next){
 
 // Delete an album by id from the data-base
 albumRouter.delete('/:id', function(req, res, next){
-    Album.findByIdAndRemove(req,params.id, req.body, function(err, album){
-        if(err){
-            console.log(err);
-            return next(err);
-        }else{
-            res.json(album);
-        }
-    });
+    Album.findById(req.params.id)
+         .then(item => 
+             item.remove()
+                 .then(() => res.json({success: true}))
+         ).catch((err) => {
+             
+         });
 });
+
+module.exports = albumRouter;
 
