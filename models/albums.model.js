@@ -15,4 +15,4 @@ const albumSchema = Schema({
     }
 });
 
-module.exports = Album = mongoose.Schema('albums', albumSchema);
+module.exports = Album = mongoose.model('albums', albumSchema);
